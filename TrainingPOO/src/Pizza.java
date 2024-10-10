@@ -36,14 +36,24 @@ public abstract class Pizza {
         return tamanho;
     }
 
+    public static String validarTipoPizza(String tipoPizza) {
+        Scanner scanner = new Scanner(System.in);
+        while (!tipoPizza.equalsIgnoreCase("doce") &&
+                !tipoPizza.equalsIgnoreCase("salgada")) {
+            System.out.println("Tipo de pizza inválido. Digite novamente (doce ou salgada): ");
+            tipoPizza = scanner.nextLine();
+        }
+        return tipoPizza;
+    }
+
     public static double definirPreco(String tamanho) {
         switch (tamanho.toLowerCase()) {
             case "pequena":
-                return 25.0;
-            case "media":
-                return 35.0;
-            case "grande":
                 return 45.0;
+            case "media":
+                return 65.0;
+            case "grande":
+                return 75.0;
             default:
                 return 30.0;
         }

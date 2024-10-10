@@ -20,6 +20,7 @@ public class Main {
         while (normalizarResposta(adicionarPizza).equalsIgnoreCase("sim")) {
             System.out.print("A pizza é doce ou salgada? ");
             String tipoPizza = scanner.nextLine();
+            tipoPizza = Pizza.validarTipoPizza(normalizarResposta(tipoPizza));
 
             System.out.print("Digite o sabor da pizza: ");
             String sabor = scanner.nextLine();
