@@ -6,7 +6,7 @@ public class Entrega extends Pedido {
         this.entregador = entregador;
     }
 
-    public Entregador getEntregador() {
+    public Entregador getEntregador() { // Métodos auxiliares(Getters)
         return entregador;
     }
 

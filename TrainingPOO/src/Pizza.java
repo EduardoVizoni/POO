@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public abstract class Pizza {
+public abstract class Pizza { // Abstração, Classe Abstrata
     private String sabor;
     private String tamanho;
     private double preco;
@@ -23,7 +23,7 @@ public abstract class Pizza {
         return preco;
     }
 
-    public abstract double calcularPreco();
+    public abstract double calcularPreco(); // Abstração, Método Abstrato
 
     public static String validarTamanho(String tamanho) {
         Scanner scanner = new Scanner(System.in);

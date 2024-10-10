@@ -12,6 +12,6 @@ public class Retirada extends Pedido {
 
     @Override
     public String toString() {
-        return super.toString() + " | Tipo: Retirada no ponto: " + pontoDeRetirada;
+        return super.toString() + " | Tipo: Retirada no ponto: " + pontoDeRetirada; // Sobreposição toString
     }
 }

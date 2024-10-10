@@ -14,7 +14,7 @@ public class Main {
 
         Cliente cliente = new Cliente(nomeCliente, enderecoCliente, telefoneCliente);
 
-        ArrayList<Pizza> pizzas = new ArrayList<>();
+        ArrayList<Pizza> pizzas = new ArrayList<>(); // ArrayList
         String adicionarPizza = "sim";
 
         while (normalizarResposta(adicionarPizza).equalsIgnoreCase("sim")) {

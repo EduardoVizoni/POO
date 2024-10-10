@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Pedido {
     private ArrayList<Pizza> pizzas;
-    private Cliente cliente;
+    private Cliente cliente; // Atributos
     private double valorTotal;
 
     public Pedido(Cliente cliente) {
@@ -10,7 +10,7 @@ public class Pedido {
         this.pizzas = new ArrayList<>();
     }
 
-    public void adicionarPizza(Pizza pizza) {
+    public void adicionarPizza(Pizza pizza) { // Método
         pizzas.add(pizza);
         valorTotal += pizza.calcularPreco();
     }
@@ -19,7 +19,7 @@ public class Pedido {
         return valorTotal;
     }
 
-    public void mostrarPedido() {
+    public void mostrarPedido() { // For-each
         for (Pizza pizza : pizzas) {
             System.out.println(pizza);
         }

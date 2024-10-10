@@ -11,6 +11,6 @@ public class PizzaDoce extends Pizza {
 
     @Override
     public String toString() {
-        return super.toString() + " (Doce)";
+        return super.toString() + " (Doce)"; // Herdando o tipo da pizza
     }
 }

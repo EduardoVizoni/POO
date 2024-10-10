@@ -2,7 +2,7 @@ public class Entregador extends Pessoa {
     private String veiculo;
     private int tempoEstimadoEntrega; // minutos
 
-    public Entregador(String nome, String veiculo, int tempoEstimadoEntrega) {
+    public Entregador(String nome, String veiculo, int tempoEstimadoEntrega) { // Método Construtor
         super(nome);
         this.veiculo = veiculo;
         this.tempoEstimadoEntrega = tempoEstimadoEntrega;
@@ -16,8 +16,8 @@ public class Entregador extends Pessoa {
         return tempoEstimadoEntrega;
     }
 
-    @Override
-    public String toString() {
+    @Override // Sobrescrita
+    public String toString() { // toString
         return "Entregador: " + getNome() + ", Veículo: " + veiculo + ", Tempo estimado de entrega: " + tempoEstimadoEntrega + " minutos.";
     }
 }

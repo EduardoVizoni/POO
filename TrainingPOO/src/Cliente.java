@@ -1,11 +1,11 @@
-public class Cliente extends Pessoa {
-    private String endereco;
+public class Cliente extends Pessoa { // Classe Filha
+    private String endereco; // Encapsulamento, declarando visibilidade de código
     private String telefone;
 
     public Cliente(String nome, String endereco, String telefone) {
         super(nome);
         this.endereco = endereco;
-        this.telefone = telefone;
+        this.telefone = telefone; // Abstração utilizando This
     }
 
     public String getTelefone() {
