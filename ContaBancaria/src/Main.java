@@ -1,51 +1,151 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Scanner;
+
+import static java.lang.System.exit;
+
 public class Main {
+
+    private static Scanner sc = new Scanner(System.in);
+    private static BancoDeDados db = new BancoDeDados();
+
     public static void main(String[] args) {
-
-
+        do {
+            mostrarOpcoesMenu();
+            int opcaoMenu = sc.nextInt();
+            try {
+                executarOpcaoMenu(opcaoMenu);
+            } catch (ContaInexistenteException |
+                     ContaJaCadastradaException e) {
+                System.err.println(e.getMessage());
+            }
+        } while (true);
     }
 
-    private void cadastroConta() {
-
+    private static void cadastroConta() {
+        System.out.print("Número da conta: ");
+        int numero = sc.nextInt();
+        try {
+            Conta conta = db.buscarConta(numero);
+        } catch (ContaInexistenteException e) {
+            System.out.print("Titular: ");
+            String titular = sc.next();
+            System.out.print("Limite: ");
+            double limite = sc.nextDouble();
+            db.inserirConta(new Conta(numero, titular, limite));
+            return;
+        }
+        throw new ContaJaCadastradaException();
     }
 
-    private void removeConta() {
-
+    private static void removeConta() {
+        Conta conta = buscaConta();
+        db.deletarConta(conta);
+        // db.deletarConta(numero);
     }
 
-    private void editaConta() {
-
+    private static void editaConta() {
+        Conta conta = buscaConta();
+        System.out.print("Titular: ");
+        String titular = sc.next();
+        System.out.print("Limite: ");
+        double limite = sc.nextDouble();
+        conta.setTitular(titular);
+        conta.setLimite(limite);
+//        db.atualizarConta(conta);
     }
 
-    private void buscaConta() {
-
+    private static Conta buscaConta() {
+        System.out.println(db.buscarContas());
+        System.out.println("Número da Conta: ");
+        int numero = sc.nextInt();
+        return db.buscarConta(numero);
     }
 
-    private void login() {
-
+    private static void login() {
     }
 
-    private void logout() {
-
+    private static void logout() {
     }
 
-    private void listarConta() {
-
+    private static void mostrarDados() {
     }
 
-    private void mostrarDadosConta() {
-
+    private static void mostrarOpcoesMenu() {
+        System.out.print("""
+                MENU:
+                
+                1 - Cadastro
+                2 - Editar
+                3 - Deletar
+                4 - Mostrar Todas
+                5 - Selecionar
+                6 - Sair
+                
+                >""");
     }
 
-    private void dadosTitular() {
-
+    private static void mostrarOpcoesConta() {
+        System.out.print("""
+                OPERAÇÕES:
+                
+                1 - Depósito
+                2 - Saque
+                3 - Transferência
+                4 - Saldo
+                5 - Voltar
+                
+                >""");
     }
 
-    private void mostrarOpcoes() {
-
+    private static void executarOpcaoMenu(int opcao) {
+        switch (opcao) {
+            case 1 -> cadastroConta();
+            case 2 -> editaConta();
+            case 3 -> removeConta();
+            case 4 -> System.out.println(db.buscarContas());
+            case 5 -> {
+                int opcaoConta;
+                Conta conta = buscaConta();
+                do {
+                    mostrarOpcoesConta();
+                    opcaoConta = sc.nextInt();
+                    do {
+                        try {
+                            executarOpcaoConta(conta, opcaoConta);
+                            break;
+                        } catch (ValorInvalidoException | ContaInexistenteException e) {
+                            System.err.println(e.getMessage());
+                        } catch (SaldoInsuficienteException | LimiteInsuficienteException | PropriaContaException e) {
+                            System.err.println(e.getMessage());
+                            break;
+                        }
+                    } while (true);
+                } while (opcaoConta != 5);
+            }
+            case 6 -> {
+                System.out.println("Até mais!");
+                System.exit(0);
+            }
+            default -> System.out.println("Opção inválida");
+        }
     }
 
-    private void executarOpcao() {
+    private static double solicitarValor() {
+        System.out.println("Valor: R$");
+        return sc.nextDouble();
+    }
+
+    private static void executarOpcaoConta(Conta conta, int opcao) {
+        switch (opcao) {
+            case 1 -> conta.deposito(solicitarValor());
+            case 2 -> conta.saque(solicitarValor());
+            case 3 -> conta.transferencia(solicitarValor(), buscaConta());
+            /* SaldoInsuficiente, LimiteInsuficiente, PropriaConta
+             * retornam para o Menu da Conta
+             *  ValorInvalido, ContaInexistente solicita novamente o valor e a conta para tranferência
+             */
+            case 4 -> System.out.println("Saldo: R$ " + conta.getSaldo());
+            case 5 -> System.out.println("Até mais!");
+            default -> System.out.println("Opção inválida");
+        }
     }
 }

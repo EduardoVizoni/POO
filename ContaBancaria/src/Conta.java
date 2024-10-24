@@ -6,67 +6,110 @@ public class Conta {
     private double limite;
 
 
-    public Conta(int numero, String titular, double saldo, double limite) {
+//    public Conta(int numero, String titular, double saldo, double limite) {
+//        this(numero, titular, limite);
+//        this.saldo = saldo;
+//    }
+
+    public Conta(int numero, String titular, double limite) {
         this.numero = numero;
         this.titular = titular;
-        this.saldo = saldo;
         this.limite = limite;
+        this.saldo = 0;
     }
 
-    public void saque(double valor) {
+    public double getSaldo() {
+        return this.saldo;
+    }
+
+    public void saque(double valor)
+            throws ValorInvalidoException,
+            SaldoInsuficienteException,
+            LimiteInsuficienteException {
         validaValor(valor);
         validaSaldo(valor);
         validaLimite(valor);
         this.saldo -= valor;
     }
 
-    public void deposito(double valor) {
+    public void deposito(double valor)
+            throws ValorInvalidoException {
         validaValor(valor);
         this.saldo += valor;
     }
 
-    public void transferencia(double valor, Conta conta) {
+    public void transferencia(double valor, Conta conta)
+            throws ContaInexistenteException,
+            PropriaContaException,
+            ValorInvalidoException,
+            SaldoInsuficienteException,
+            LimiteInsuficienteException {
         validaConta(conta);
         this.saque(valor);
+//      conta.saldo += valor;
         conta.deposito(valor);
     }
 
-    // Método para validar o valor
-    private void validaValor(double valor) {
+    private void validaValor(double valor)
+            throws ValorInvalidoException {
         if (valor <= 0) {
             throw new ValorInvalidoException();
         }
     }
 
-    // Método para validar o saldo
-    private void validaSaldo(double valor) {
-        if(this.saldo < valor) {
+    private void validaSaldo(double valor)
+            throws SaldoInsuficienteException {
+        if (this.saldo <= valor) {
             throw new SaldoInsuficienteException();
         }
     }
 
-    // Método para validar o limite
-    private void validaLimite(double valor) {
-        if(this.limite < valor) {
+    private void validaLimite(double valor)
+            throws LimiteInsuficienteException {
+        if (this.limite <= valor) {
             throw new LimiteInsuficienteException();
         }
     }
 
-    // Método para validar a conta
-    private void validaConta(Conta conta) {
+    private void validaConta(Conta conta)
+            throws ContaInexistenteException,
+            PropriaContaException {
         validaContaNula(conta);
         validaContaPropria(conta);
     }
 
-    private void validaContaNula(Conta conta) {
-        if(conta == null) {
+    private void validaContaNula(Conta conta)
+            throws ContaInexistenteException {
+        if (conta == null) {
             throw new ContaInexistenteException();
         }
     }
 
-    private void validaContaPropria(Conta conta) {
-        if(this == conta) {
+    private void validaContaPropria(Conta conta)
+            throws PropriaContaException {
+        if (this == conta) {
             throw new PropriaContaException();
         }
+    }
+
+    public int getNumero() {
+        return this.numero;
+    }
+
+    public void setTitular(String titular) {
+        this.titular = titular;
+    }
+
+    public void setLimite(double limite) {
+        this.limite = limite;
+    }
+
+    @Override
+    public String toString() {
+        return "\n--- Conta ---" +
+                "\n- Número: " + numero +
+                "\n- Titular: " + titular +
+                "\n- Saldo: " + saldo +
+                "\n- Limite: " + limite;
     }
 }
