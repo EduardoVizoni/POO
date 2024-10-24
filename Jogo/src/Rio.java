@@ -1,62 +1,93 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Rio {
-    public List<Personagem> margemEsquerda;
-    public List<Personagem> margemDireita;
+    private List<Personagem> margemDireita;
+    private List<Personagem> margemEsquerda;
     private List<Personagem> barco;
-    private final int capacidadeBarco = 2;
+    private String margemBarco;
 
     public Rio() {
-        margemEsquerda = new ArrayList<>();
         margemDireita = new ArrayList<>();
+        margemEsquerda = new ArrayList<>();
         barco = new ArrayList<>();
+        margemBarco = "Direita"; // Inicia na margem direita
     }
 
-    public void adicionarPersonagem(Personagem personagem) {
+    public void adicionarPersonagemMargemDireita(Personagem personagem) {
+        margemDireita.add(personagem);
+    }
+
+    public void adicionarPersonagemMargemEsquerda(Personagem personagem) {
         margemEsquerda.add(personagem);
     }
 
     public void mostrarStatus() {
-        System.out.println("Margem Esquerda: " + margemEsquerda);
         System.out.println("Margem Direita: " + margemDireita);
-        System.out.println("Barco: " + barco);
+        System.out.println("Margem Esquerda: " + margemEsquerda);
+        System.out.println("Barco: " + barco + " (Na margem " + margemBarco + ")");
     }
 
-    public void atravessar(String margem) {
-        if (margem.equalsIgnoreCase("D")) {
-            if (barco.size() > 0) {
-                margemDireita.addAll(barco);
+    public Personagem selecionarPersonagem(Class<? extends Personagem> tipo) {
+        List<Personagem> margemAtual = margemBarco.equals("Direita") ? margemDireita : margemEsquerda;
+        for (Personagem personagem : margemAtual) {
+            if (tipo.isInstance(personagem)) {
+                return personagem;
             }
-        } else if (margem.equalsIgnoreCase("E")) {
-            if (barco.size() > 0) {
-                margemEsquerda.addAll(barco);
-            }
+        }
+        return null;
+    }
+
+    public void atravessarRio(List<Personagem> personagens) {
+        if (barco.isEmpty()) {
+            System.out.println("O barco está vazio!");
+            return;
+        }
+        if (margemBarco.equals("Direita")) {
+            margemEsquerda.addAll(barco);
+        } else {
+            margemDireita.addAll(barco);
         }
         barco.clear();
+        margemBarco = margemBarco.equals("Direita") ? "Esquerda" : "Direita";
     }
 
-    public boolean verificarVitoria() {
-        return margemDireita.size() == 6;
+    public void embarcar(List<Personagem> personagens) {
+        barco.addAll(personagens);
+        if (margemBarco.equals("Direita")) {
+            margemDireita.removeAll(personagens);
+        } else {
+            margemEsquerda.removeAll(personagens);
+        }
     }
 
-    public boolean canibaisSuperamMissionarios(List<Personagem> margem) {
-        int missionarios = 0;
-        int canibais = 0;
+    public boolean verificarConflito() {
+        int missionariosDireita = 0;
+        int canibaisDireita = 0;
+        int missionariosEsquerda = 0;
+        int canibaisEsquerda = 0;
 
-        for (Personagem p : margem) {
+        for (Personagem p : margemDireita) {
             if (p instanceof Missionario) {
-                missionarios++;
-            } else if (p instanceof Canibal) {
-                canibais++;
+                missionariosDireita++;
+            } else {
+                canibaisDireita++;
             }
         }
 
-        return canibais > missionarios && missionarios > 0;
+        for (Personagem p : margemEsquerda) {
+            if (p instanceof Missionario) {
+                missionariosEsquerda++;
+            } else {
+                canibaisEsquerda++;
+            }
+        }
+
+        return (missionariosDireita > 0 && canibaisDireita > missionariosDireita) ||
+                (missionariosEsquerda > 0 && canibaisEsquerda > missionariosEsquerda);
     }
 
-    public void atavessar(String margem) {
-    }
 
 
 }
