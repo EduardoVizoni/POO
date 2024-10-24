@@ -7,7 +7,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Rio rio = new Rio();
 
-        // Adicionando personagens
         rio.adicionarPersonagemMargemDireita(new Missionario("Missionário 1"));
         rio.adicionarPersonagemMargemDireita(new Missionario("Missionário 2"));
         rio.adicionarPersonagemMargemDireita(new Missionario("Missionário 3"));
@@ -17,8 +16,7 @@ public class Main {
 
         while (true) {
             rio.mostrarStatus();
-
-            System.out.print("Escolha 1 ou 2 personagens para atravessar (M/C): ");
+             System.out.print("Escolha 1 ou 2 personagens para atravessar (M/C): ");
             List<Personagem> personagensSelecionados = new ArrayList<>();
             String escolha = scanner.nextLine();
 
@@ -44,7 +42,7 @@ public class Main {
 
             if (rio.verificarConflito()) {
                 System.out.println("Conflito! Os canibais comeram os missionários!");
-                break; // O jogo termina se houver um conflito
+                break;
             }
         }
 

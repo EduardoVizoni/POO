@@ -12,7 +12,7 @@ public class Rio {
         margemDireita = new ArrayList<>();
         margemEsquerda = new ArrayList<>();
         barco = new ArrayList<>();
-        margemBarco = "Direita"; // Inicia na margem direita
+        margemBarco = "Direita";
     }
 
     public void adicionarPersonagemMargemDireita(Personagem personagem) {
