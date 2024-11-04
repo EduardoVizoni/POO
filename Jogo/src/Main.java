@@ -16,7 +16,7 @@ public class Main {
 
         while (true) {
             rio.mostrarStatus();
-             System.out.print("Escolha 1 ou 2 personagens para atravessar (M/C): ");
+                System.out.print("Escolha 1 ou 2 personagens para atravessar (M/C): ");
             List<Personagem> personagensSelecionados = new ArrayList<>();
             String escolha = scanner.nextLine();
 
