@@ -1,8 +1,8 @@
+import Exceptions.*;
+
 import java.util.Scanner;
 
-import static java.lang.System.exit;
-
-public class Main {
+public class Executavel {
 
     private static Scanner sc = new Scanner(System.in);
     private static BancoDeDados db = new BancoDeDados();
@@ -13,14 +13,15 @@ public class Main {
             int opcaoMenu = sc.nextInt();
             try {
                 executarOpcaoMenu(opcaoMenu);
-            } catch (ContaInexistenteException |
-                     ContaJaCadastradaException e) {
-                System.err.println(e.getMessage());
+            } catch (ContaInexistenteException | ContaJaCadastradaException e) {
+                System.out.println(e.getMessage());
             }
+
         } while (true);
     }
 
     private static void cadastroConta() {
+        CRUDConta bdConta = new CRUDConta();
         System.out.print("Número da conta: ");
         int numero = sc.nextInt();
         try {
@@ -30,7 +31,8 @@ public class Main {
             String titular = sc.next();
             System.out.print("Limite: ");
             double limite = sc.nextDouble();
-            db.inserirConta(new Conta(numero, titular, limite));
+            Conta teste = new Conta(numero, titular, limite);
+            bdConta.create(teste);
             return;
         }
         throw new ContaJaCadastradaException();
@@ -104,7 +106,13 @@ public class Main {
             case 4 -> System.out.println(db.buscarContas());
             case 5 -> {
                 int opcaoConta;
-                Conta conta = buscaConta();
+                Conta conta;
+                try {
+                    conta = buscaConta();
+                } catch (ContaInexistenteException e) {
+                    System.err.print(e.getMessage());
+                    break;
+                }
                 do {
                     mostrarOpcoesConta();
                     opcaoConta = sc.nextInt();
