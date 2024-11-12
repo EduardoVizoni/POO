@@ -3,17 +3,20 @@ import Exceptions.*;
 public class Conta {
 
     private int numero;
-    private String titular;
+    private Cliente titular;
     private double saldo;
     private double limite;
 
+    public Conta() {
+    }
 
-    public Conta(int numero, String titular, double saldo, double limite) {
+
+    public Conta(int numero, Cliente titular, double saldo, double limite) {
         this(numero, titular, limite);
         this.saldo = saldo;
     }
 
-    public Conta(int numero, String titular, double limite) {
+    public Conta(int numero, Cliente titular, double limite) {
         this.numero = numero;
         this.titular = titular;
         this.limite = limite;
@@ -30,6 +33,8 @@ public class Conta {
     public void deposito(double valor) throws ValorInvalidoException {
         validaValor(valor);
         this.saldo += valor;
+        CRUDConta crudConta = new CRUDConta();
+        crudConta.update(this);
     }
 
     public void transferencia(double valor, Conta conta)
@@ -85,16 +90,20 @@ public class Conta {
         return limite;
     }
 
-    public String getTitular() {
+    public Cliente getTitular() {
         return titular;
     }
 
-    public void setTitular(String titular) {
+    public void setTitular(Cliente titular) {
         this.titular = titular;
     }
 
     public void setLimite(double limite) {
         this.limite = limite;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     public double getSaldo() {

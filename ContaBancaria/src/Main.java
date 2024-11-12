@@ -1,11 +1,13 @@
 import Exceptions.*;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
-public class Executavel {
+public class Main {
 
-    private static Scanner sc = new Scanner(System.in);
-    private static BancoDeDados db = new BancoDeDados();
+    private static final Scanner sc = new Scanner(System.in);
+    private static final CRUDConta crudConta = new CRUDConta();
+    private static final CRUDCliente crudCliente = new CRUDCliente();
 
     public static void main(String[] args) {
         do {
@@ -25,10 +27,16 @@ public class Executavel {
         System.out.print("Número da conta: ");
         int numero = sc.nextInt();
         try {
-            Conta conta = db.buscarConta(numero);
+            Conta conta = crudConta.readOne(numero);
         } catch (ContaInexistenteException e) {
-            System.out.print("Titular: ");
-            String titular = sc.next();
+            System.out.println(crudCliente.readAll());
+
+
+            System.out.print("Id Titular: ");
+            int idTitular = sc.nextInt();
+
+            Cliente titular = crudCliente.readOne(idTitular);
+
             System.out.print("Limite: ");
             double limite = sc.nextDouble();
             Conta teste = new Conta(numero, titular, limite);
@@ -40,26 +48,33 @@ public class Executavel {
 
     private static void removeConta() {
         Conta conta = buscaConta();
-        db.deletarConta(conta);
+        crudConta.delete(conta.getNumero());
         // db.deletarConta(numero);
     }
 
     private static void editaConta() {
         Conta conta = buscaConta();
-        System.out.print("Titular: ");
-        String titular = sc.next();
+
+        Cliente titular = buscaCliente();
         System.out.print("Limite: ");
+
         double limite = sc.nextDouble();
-        conta.setTitular(titular);
-        conta.setLimite(limite);
-//        db.atualizarConta(conta);
+        crudConta.update(conta);
     }
 
     private static Conta buscaConta() {
-        System.out.println(db.buscarContas());
+        Conta conta = new Conta();
+        System.out.println(crudConta.readAll());
         System.out.println("Número da Conta: ");
         int numero = sc.nextInt();
-        return db.buscarConta(numero);
+        return crudConta.readOne(numero);
+    }
+
+    private static Cliente buscaCliente() {
+        System.out.println(crudCliente.readAll());
+        System.out.println("Id do cliente: ");
+        int numero = sc.nextInt();
+        return crudCliente.readOne(numero);
     }
 
     private static void login() {
@@ -99,14 +114,14 @@ public class Executavel {
     }
 
     private static void executarOpcaoMenu(int opcao) {
+        Conta conta = new Conta();
         switch (opcao) {
             case 1 -> cadastroConta();
             case 2 -> editaConta();
             case 3 -> removeConta();
-            case 4 -> System.out.println(db.buscarContas());
+            case 4 -> System.out.println(crudConta.readAll());
             case 5 -> {
                 int opcaoConta;
-                Conta conta;
                 try {
                     conta = buscaConta();
                 } catch (ContaInexistenteException e) {
@@ -146,7 +161,11 @@ public class Executavel {
         switch (opcao) {
             case 1 -> conta.deposito(solicitarValor());
             case 2 -> conta.saque(solicitarValor());
-            case 3 -> conta.transferencia(solicitarValor(), buscaConta());
+            case 3 -> { Conta contaBeneficiario = buscaConta();
+            conta.transferencia(solicitarValor(), buscaConta());
+            crudConta.update(conta);
+            crudConta.update(contaBeneficiario);
+            }
             /* SaldoInsuficiente, LimiteInsuficiente, PropriaConta
              * retornam para o Menu da Conta
              *  ValorInvalido, ContaInexistente solicita novamente o valor e a conta para tranferência

@@ -1,6 +1,5 @@
-
 import Exceptions.ContaInexistenteException;
-
+import com.mysql.cj.protocol.x.ContinuousOutputStream;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,11 +14,11 @@ public class CRUDConta {
 
     public void create(Conta conta) {
         try (Connection con = banco.getConexao()) {
-            PreparedStatement ps = con.prepareStatement("INSERT INTO tb_conta (numero, titular, saldo, limite) " +
+            PreparedStatement ps = con.prepareStatement("INSERT INTO tb_conta (numero, id_cliente, saldo, limite) " +
                     "VALUES (?, ?, ?, ?)");
 
             ps.setInt(1, conta.getNumero());
-            ps.setString(2, conta.getTitular());
+            ps.setInt(2, conta.getTitular().getId());
             ps.setDouble(3, conta.getSaldo());
             ps.setDouble(4, conta.getLimite());
             ps.execute();
@@ -36,10 +35,12 @@ public class CRUDConta {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int num = rs.getInt("numero");
-                String nome = rs.getString("titular");
+                int idCliente = rs.getInt("id_cliente");
                 double saldo = rs.getDouble("saldo");
                 double limite = rs.getDouble("limite");
-                return new Conta(num, nome, saldo, limite);
+                CRUDCliente crudCliente = new CRUDCliente();
+                Cliente titular = crudCliente.readOne(idCliente);
+                return new Conta(num, titular, saldo, limite);
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -47,34 +48,33 @@ public class CRUDConta {
         throw new ContaInexistenteException();
     }
 
-    public List<Conta> readAll(int numero) {
+    public List<Conta> readAll() {
         List<Conta> contas = new ArrayList<>();
+        String sql = "SELECT * FROM tb_conta";
         try (Connection con = banco.getConexao()) {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM tb_conta " +
-                    "WHERE numero = ?");
-            ps.setInt(1, numero);
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM tb_conta");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int num = rs.getInt("numero");
-                String nome = rs.getString("titular");
-                double saldo = rs.getDouble("saldo");
-                double limite = rs.getDouble("limite");
-                contas.add(new Conta(num, nome, saldo, limite));
+                contas.add(new Conta(
+                        rs.getInt("numero"),
+                        rs.getInt("id_cliente"),
+                        rs.getDouble("saldo"),
+                        rs.getDouble("limite")
+                ));
             }
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            System.err.println("Erro ao listar contas: " + e.getMessage());
         }
-        throw new ContaInexistenteException();
+        return contas;
     }
 
-    public void update(String titular, int novoNumero, double novoLimite) {
+    public void update(Conta conta) {
         try (Connection con = banco.getConexao()) {
             PreparedStatement ps = con.prepareStatement("UPDATE tb_conta " +
-                    "SET numero = ?, limite = ? " +
-                    "WHERE titular = ?");
-            ps.setInt(1, novoNumero);
-            ps.setDouble(2, novoLimite);
-            ps.setString(3, titular);
+                    "SET saldo = ?" +
+                    "WHERE numero = ?");
+            ps.setDouble(1, conta.getSaldo());
+            ps.setInt(2, conta.getNumero());
             ps.execute();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
