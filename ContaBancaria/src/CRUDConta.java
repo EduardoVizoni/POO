@@ -39,8 +39,8 @@ public class CRUDConta {
                 double saldo = rs.getDouble("saldo");
                 double limite = rs.getDouble("limite");
                 CRUDCliente crudCliente = new CRUDCliente();
-                Cliente titular = crudCliente.readOne(idCliente);
-                return new Conta(num, titular, saldo, limite);
+                Cliente titularCliente = crudCliente.readOne(idCliente);
+                return new Conta(num, titularCliente, saldo, limite);
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -55,12 +55,13 @@ public class CRUDConta {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM tb_conta");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                contas.add(new Conta(
-                        rs.getInt("numero"),
-                        rs.getInt("id_cliente"),
-                        rs.getDouble("saldo"),
-                        rs.getDouble("limite")
-                ));
+                int num = rs.getInt("numero");
+                int idCliente = rs.getInt("id_cliente");
+                double saldo = rs.getDouble("saldo");
+                double limite = rs.getDouble("limite");
+                CRUDCliente crudCliente = new CRUDCliente();
+                Cliente titularCliente = crudCliente.readOne(rs.getInt("id_cliente"));
+                contas.add(new Conta(num, titularCliente, saldo, limite));
             }
         } catch (SQLException e) {
             System.err.println("Erro ao listar contas: " + e.getMessage());
@@ -71,10 +72,12 @@ public class CRUDConta {
     public void update(Conta conta) {
         try (Connection con = banco.getConexao()) {
             PreparedStatement ps = con.prepareStatement("UPDATE tb_conta " +
-                    "SET saldo = ?" +
+                    "SET id_cliente = ?, saldo = ?, limite = ?" +
                     "WHERE numero = ?");
-            ps.setDouble(1, conta.getSaldo());
-            ps.setInt(2, conta.getNumero());
+            ps.setInt(1, conta.getTitular().getId());
+            ps.setDouble(2, conta.getSaldo());
+            ps.setDouble(3, conta.getLimite());
+            ps.setInt(4, conta.getNumero());
             ps.execute();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
