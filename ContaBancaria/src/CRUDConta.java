@@ -60,7 +60,7 @@ public class CRUDConta {
                 double saldo = rs.getDouble("saldo");
                 double limite = rs.getDouble("limite");
                 CRUDCliente crudCliente = new CRUDCliente();
-                Cliente titularCliente = crudCliente.readOne(rs.getInt("id_cliente"));
+                Cliente titularCliente = crudCliente.readOne(rs.getInt(idCliente));
                 contas.add(new Conta(num, titularCliente, saldo, limite));
             }
         } catch (SQLException e) {
