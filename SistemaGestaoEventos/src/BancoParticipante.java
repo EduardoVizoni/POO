@@ -53,4 +53,21 @@ public class BancoParticipante {
             System.err.println(e.getMessage());
         }
     }
+
+    public List<Participante> getParticipantes() {
+        List<Participante> participantes = new ArrayList<>();
+        try (Connection con = banco.getConexao()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM participantes");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String email = rs.getString("email");
+                participantes.add(new Participante(id, nome, email));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return participantes;
+    }
 }

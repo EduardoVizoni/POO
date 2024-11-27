@@ -16,7 +16,6 @@ public class BancoEvento {
         this.banco = new BancoDeDados();
     }
 
-
     public void adicionarEvento(Evento evento) {
         try (Connection con = banco.getConexao()) {
             PreparedStatement ps = con.prepareStatement("INSERT INTO eventos (id, nome, local, data, descricao) " +
@@ -59,5 +58,24 @@ public class BancoEvento {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public List<Evento> getEventos() {
+        List<Evento> eventos = new ArrayList<>();
+        try (Connection con = banco.getConexao()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM eventos");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String local = rs.getString("local");
+                String data = rs.getString("data");
+                String descricao = rs.getString("descricao");
+                eventos.add(new Evento(id, nome, local, data, descricao));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return eventos;
     }
 }
