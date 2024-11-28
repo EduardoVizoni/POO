@@ -1,3 +1,5 @@
+import Exceptions.EventoJaCadastradoException;
+
 import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +16,30 @@ public class BancoEvento {
     public BancoEvento() {
         this.eventos = new ArrayList<>();
         this.banco = new BancoDeDados();
+    }
+
+    public void cadastrarEvento(int eventoId, String nome, String local, String data, String descricao) throws EventoJaCadastradoException {
+        try (Connection con = banco.getConexao()) {
+            PreparedStatement consulta = con.prepareStatement("SELECT * FROM eventos WHERE nome = ? AND local = ? AND data = ?");
+            consulta.setString(1, nome);
+            consulta.setString(2, local);
+            consulta.setString(3, data);
+            ResultSet rs = consulta.executeQuery();
+
+            if (rs.next()) {
+                throw new EventoJaCadastradoException("O evento com este nome, local e data já foi cadastrado.");
+            } else {
+                PreparedStatement insercao = con.prepareStatement("INSERT INTO eventos (nome, local, data, descricao) VALUES (?, ?, ?, ?)");
+                insercao.setString(1, nome);
+                insercao.setString(2, local);
+                insercao.setString(3, data);
+                insercao.setString(4, descricao);
+                insercao.executeUpdate();
+                System.out.println("Evento cadastrado com sucesso!");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro de SQL: " + e.getMessage());
+        }
     }
 
     public void adicionarEvento(Evento evento) {
@@ -47,6 +73,7 @@ public class BancoEvento {
         }
         return null;
     }
+
 
     public void removerEvento(Evento evento) {
         try (Connection con = banco.getConexao()) {

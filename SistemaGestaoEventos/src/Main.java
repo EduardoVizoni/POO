@@ -1,8 +1,11 @@
+import Exceptions.ErroConexaoBancoException;
+import Exceptions.InscricaoJaExistenteException;
+
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ErroConexaoBancoException, InscricaoJaExistenteException {
         Scanner scanner = new Scanner(System.in);
 
         BancoEvento bancoEvento = new BancoEvento();
@@ -81,8 +84,8 @@ public class Main {
         System.out.println("Participante cadastrado com sucesso!");
     }
 
-    private static void inscreverParticipante(Scanner scanner, BancoInscricao bancoInscricao, BancoEvento bancoEvento, BancoParticipante bancoParticipante) {
-        System.out.print("Digite o nome do evento: ");
+    private static void inscreverParticipante(Scanner scanner, BancoInscricao bancoInscricao, BancoEvento bancoEvento, BancoParticipante bancoParticipante) throws ErroConexaoBancoException, InscricaoJaExistenteException {
+        System.out.print("Digite o E-mail do evento: ");
         String nomeEvento = scanner.nextLine();
         Evento evento = bancoEvento.buscarEventoPorNome(nomeEvento);
 
@@ -104,7 +107,7 @@ public class Main {
     }
 
     private static void removerInscricao(Scanner scanner, BancoInscricao bancoInscricao, BancoEvento bancoEvento, BancoParticipante bancoParticipante) {
-        System.out.print("Digite o nome do evento: ");
+        System.out.print("Digite o E-mail do evento: ");
         String nomeEvento = scanner.nextLine();
         Evento evento = bancoEvento.buscarEventoPorNome(nomeEvento);
 
@@ -113,7 +116,7 @@ public class Main {
             return;
         }
 
-        System.out.print("Digite o nome do participante: ");
+        System.out.print("Digite o E-mail do participante: ");
         String nomeParticipante = scanner.nextLine();
         Participante participante = bancoParticipante.buscarParticipantePorEmail(nomeParticipante);
 
