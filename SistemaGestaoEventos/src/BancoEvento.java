@@ -18,13 +18,11 @@ public class BancoEvento {
 
     public void adicionarEvento(Evento evento) {
         try (Connection con = banco.getConexao()) {
-            PreparedStatement ps = con.prepareStatement("INSERT INTO eventos (id, nome, local, data, descricao) " +
-                    "VALUES (?,?,?,?,?);");
-            ps.setInt(1, evento.getId());
-            ps.setString(2, evento.getNome());
-            ps.setString(3, evento.getLocal());
-            ps.setString(4, evento.getData());
-            ps.setString(5, evento.getDescricao());
+            PreparedStatement ps = con.prepareStatement("INSERT INTO eventos (nome, local, data, descricao) VALUES (?,?,?,?)");
+            ps.setString(1, evento.getNome());
+            ps.setString(2, evento.getLocal());
+            ps.setString(3, evento.getData());
+            ps.setString(4, evento.getDescricao());
             ps.execute();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
