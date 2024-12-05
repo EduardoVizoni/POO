@@ -1,21 +1,19 @@
-import java.util.List;
-
 public class Cliente {
 
-    private List<Cliente> clientes;
+
     private int id;
     private String nome;
     private String email;
     private String telefone;
-    private int id_plano;
+    private int idPlano;
 
-    public Cliente(int id, String nome, String email, String telefone, int id_plano) {
+    public Cliente(int id, String nome, String email, String telefone) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
-        this.id_plano = id_plano;
     }
+
 
     public int getId() {
         return id;
@@ -49,22 +47,11 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    public int getId_plano() {
-        return id_plano;
+    public int getIdPlano() {
+        return idPlano;
     }
 
-    public void setId_plano(int id_plano) {
-        this.id_plano = id_plano;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", id_plano=" + id_plano +
-                '}';
+    public void setIdPlano(int idPlano) {
+        this.idPlano = idPlano;
     }
 }

@@ -1,19 +1,19 @@
-import java.sql.Date;
-
 public class Contrato {
 
     private int id;
-    private int id_plano;
+    private int idPlano;
     private String termos;
-    private Date data_inicio; // dd/mm/yyyy
-    private Date data_fim; // dd/mm/yyyy
+    private String dataInicio;
+    private String dataFim;
+    private double custoMensal;
 
-    public Contrato(int id, int id_plano, String termos, Date data_inicio, Date data_fim) {
+    public Contrato(int id, int idPlano, String termos, String dataInicio, String dataFim, double custoMensal) {
         this.id = id;
-        this.id_plano = id_plano;
+        this.idPlano = idPlano;
         this.termos = termos;
-        this.data_inicio = data_inicio;
-        this.data_fim = data_fim;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.custoMensal = custoMensal;
     }
 
     public int getId() {
@@ -24,12 +24,12 @@ public class Contrato {
         this.id = id;
     }
 
-    public int getId_plano() {
-        return id_plano;
+    public int getIdPlano() {
+        return idPlano;
     }
 
-    public void setId_plano(int id_plano) {
-        this.id_plano = id_plano;
+    public void setIdPlano(int idPlano) {
+        this.idPlano = idPlano;
     }
 
     public String getTermos() {
@@ -40,30 +40,27 @@ public class Contrato {
         this.termos = termos;
     }
 
-    public Date getData_inicio() {
-        return data_inicio;
+    public String getDataInicio() {
+        return dataInicio;
     }
 
-    public void setData_inicio(Date data_inicio) {
-        this.data_inicio = data_inicio;
+    public void setDataInicio(String dataInicio) {
+        this.dataInicio = dataInicio;
     }
 
-    public Date getData_fim() {
-        return data_fim;
+    public String getDataFim() {
+        return dataFim;
     }
 
-    public void setData_fim(Date data_fim) {
-        this.data_fim = data_fim;
+    public void setDataFim(String dataFim) {
+        this.dataFim = dataFim;
     }
 
-    @Override
-    public String toString() {
-        return "Contrato{" +
-                "id=" + id +
-                ", id_plano=" + id_plano +
-                ", termos='" + termos + '\'' +
-                ", data_inicio=" + data_inicio +
-                ", data_fim=" + data_fim +
-                '}';
+    public double getCustoMensal() {
+        return custoMensal;
+    }
+
+    public void setCustoMensal(double custoMensal) {
+        this.custoMensal = custoMensal;
     }
 }

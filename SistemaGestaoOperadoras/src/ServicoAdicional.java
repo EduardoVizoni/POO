@@ -1,14 +1,17 @@
 public class ServicoAdicional {
 
     private int id;
+    private String nome;
     private String descricao;
-    private double custo_mensal;
+    private double custoMensal;
 
-    public ServicoAdicional(int id, String descricao, double custo_mensal) {
+    public ServicoAdicional(int id, String nome, String descricao, double custoMensal) {
         this.id = id;
+        this.nome = nome;
         this.descricao = descricao;
-        this.custo_mensal = custo_mensal;
+        this.custoMensal = custoMensal;
     }
+
 
     public int getId() {
         return id;
@@ -16,6 +19,14 @@ public class ServicoAdicional {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getDescricao() {
@@ -26,20 +37,11 @@ public class ServicoAdicional {
         this.descricao = descricao;
     }
 
-    public double getCusto_mensal() {
-        return custo_mensal;
+    public double getCustoMensal() {
+        return custoMensal;
     }
 
-    public void setCusto_mensal(double custo_mensal) {
-        this.custo_mensal = custo_mensal;
-    }
-
-    @Override
-    public String toString() {
-        return "ServicoAdicional{" +
-                "id=" + id +
-                ", descricao='" + descricao + '\'' +
-                ", custo_mensal=" + custo_mensal +
-                '}';
+    public void setCustoMensal(double custoMensal) {
+        this.custoMensal = custoMensal;
     }
 }

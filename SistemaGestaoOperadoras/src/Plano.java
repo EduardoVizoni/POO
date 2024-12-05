@@ -1,23 +1,19 @@
-import java.util.List;
-
 public class Plano {
-
-    private List<Plano> planos;
 
     private int id;
     private String operadora;
     private String nome;
-    private double quantidade_dados;
-    private double quantidade_dados_bonus;
+    private double quantidadeDados;
+    private Double quantidadeDadosBonus; // Opcional
     private String beneficios;
     private double valor;
 
-    public Plano(int id, String operadora, String nome, double quantidade_dados, double quantidade_dados_bonus, String beneficios, double valor) {
+    public Plano(int id, String operadora, String nome, double quantidadeDados, Double quantidadeDadosBonus, String beneficios, double valor) {
         this.id = id;
         this.operadora = operadora;
         this.nome = nome;
-        this.quantidade_dados = quantidade_dados;
-        this.quantidade_dados_bonus = quantidade_dados_bonus;
+        this.quantidadeDados = quantidadeDados;
+        this.quantidadeDadosBonus = quantidadeDadosBonus;
         this.beneficios = beneficios;
         this.valor = valor;
     }
@@ -46,20 +42,20 @@ public class Plano {
         this.nome = nome;
     }
 
-    public double getQuantidade_dados() {
-        return quantidade_dados;
+    public double getQuantidadeDados() {
+        return quantidadeDados;
     }
 
-    public void setQuantidade_dados(double quantidade_dados) {
-        this.quantidade_dados = quantidade_dados;
+    public void setQuantidadeDados(double quantidadeDados) {
+        this.quantidadeDados = quantidadeDados;
     }
 
-    public double getQuantidade_dados_bonus() {
-        return quantidade_dados_bonus;
+    public Double getQuantidadeDadosBonus() {
+        return quantidadeDadosBonus;
     }
 
-    public void setQuantidade_dados_bonus(double quantidade_dados_bonus) {
-        this.quantidade_dados_bonus = quantidade_dados_bonus;
+    public void setQuantidadeDadosBonus(Double quantidadeDadosBonus) {
+        this.quantidadeDadosBonus = quantidadeDadosBonus;
     }
 
     public String getBeneficios() {
@@ -76,18 +72,5 @@ public class Plano {
 
     public void setValor(double valor) {
         this.valor = valor;
-    }
-
-    @Override
-    public String toString() {
-        return "Plano{" +
-                "id=" + id +
-                ", operadora='" + operadora + '\'' +
-                ", nome='" + nome + '\'' +
-                ", quantidade_dados=" + quantidade_dados +
-                ", quantidade_dados_bonus=" + quantidade_dados_bonus +
-                ", beneficios='" + beneficios + '\'' +
-                ", valor=" + valor +
-                '}';
     }
 }
