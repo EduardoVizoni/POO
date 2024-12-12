@@ -2,72 +2,59 @@ package src.main.java.org.example;
 
 public class Brincadeira {
 
+    private static int geradorCodigo = 1;
     private int codigo;
-    private int gerarCodigo;
     private String nome;
+    private int divertimento;
     private int cansaco;
     private int fome;
     private int sede;
     private int sujeira;
-    private int divertimento;
 
-    public Brincadeira(int codigo, int gerarCodigo, String nome, int cansaco,
-                       int fome, int sede, int sujeira, int divertimento) {
-        this.codigo = codigo;
-        this.gerarCodigo = gerarCodigo;
+    public Brincadeira(String nome, int divertimento, int cansaco, int fome, int sede, int sujeira) {
+        this.codigo = geradorCodigo++;
         this.nome = nome;
+        this.divertimento = divertimento;
         this.cansaco = cansaco;
         this.fome = fome;
         this.sede = sede;
         this.sujeira = sujeira;
-        this.divertimento = divertimento;
     }
 
     public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public int getDivertimento() {
+        return divertimento;
     }
 
     public int getCansaco() {
         return cansaco;
     }
 
-    public void setCansaco(int cansaco) {
-        this.cansaco = cansaco;
-    }
-
     public int getFome() {
         return fome;
-    }
-
-    public void setFome(int fome) {
-        this.fome = fome;
     }
 
     public int getSede() {
         return sede;
     }
 
-    public void setSede(int sede) {
-        this.sede = sede;
-    }
-
     public int getSujeira() {
         return sujeira;
     }
 
-    public void setSujeira(int sujeira) {
-        this.sujeira = sujeira;
-    }
-
-    public int getDivertimento() {
-        return divertimento;
-    }
-
-    public void setDivertimento(int divertimento) {
-        this.divertimento = divertimento;
+    @Override
+    public String toString() {
+        return "Brincadeira{" +
+                "Código=" + codigo +
+                ", Nome='" + nome + '\'' +
+                ", Divertimento=" + divertimento +
+                ", Cansaço=" + cansaco +
+                ", Fome=" + fome +
+                ", Sede=" + sede +
+                ", Sujeira=" + sujeira +
+                '}';
     }
 }

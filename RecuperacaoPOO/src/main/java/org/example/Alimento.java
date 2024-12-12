@@ -2,37 +2,14 @@ package src.main.java.org.example;
 
 public class Alimento {
 
-    private String nome;
-    private int geradorCodigo;
-    private int nutricao;
+    private static int geradorCodigo = 1;
     private int codigo;
+    private String nome;
+    private int nutricao;
 
-    public Alimento(String nome, int codigo) {
+    public Alimento(String nome, int nutricao) {
+        this.codigo = geradorCodigo++;
         this.nome = nome;
-        this.codigo = codigo;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public int getGeradorCodigo() {
-        return geradorCodigo;
-    }
-
-    public void setGeradorCodigo(int geradorCodigo) {
-        this.geradorCodigo = geradorCodigo;
-    }
-
-    public int getNutricao() {
-        return nutricao;
-    }
-
-    public void setNutricao(int nutricao) {
         this.nutricao = nutricao;
     }
 
@@ -40,7 +17,16 @@ public class Alimento {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public int getNutricao() {
+        return nutricao;
+    }
+
+    @Override
+    public String toString() {
+        return "Alimento{" +
+                "Código=" + codigo +
+                ", Nome='" + nome + '\'' +
+                ", Nutrição=" + nutricao +
+                '}';
     }
 }
