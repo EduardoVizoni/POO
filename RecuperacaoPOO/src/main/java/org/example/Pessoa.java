@@ -16,6 +16,7 @@ public class Pessoa {
 
     public void add(Pessoa pessoa) {
         pessoa.add(pessoa);
+        System.out.println("Pessoa adicionada com sucesso!");
     }
 
     public String getSenha() {
@@ -50,7 +51,17 @@ public class Pessoa {
         this.cpf = cpf;
     }
 
-    public void botaPetParaDormir() {
+    public boolean botaPetParaDormir() {
+        if(Pet.getAcordado == true) {
+            return Pet.setAcordado == false;
+        }
+        return false;
+    }
 
+    public boolean acordarPet() {
+        if(Pet.getAcordado == false) {
+            return Pet.setAcordado == true;
+        }
+        return false;
     }
 }

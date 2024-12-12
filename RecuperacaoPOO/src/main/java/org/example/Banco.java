@@ -14,7 +14,7 @@ public class Banco {
     }
 
     public void cadastrarPessoa(Pessoa pessoa) {
-
+        pessoa.add(pessoa);
     }
 
     public void removerPet(Pet pet) {
