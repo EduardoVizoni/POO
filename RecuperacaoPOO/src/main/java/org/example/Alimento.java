@@ -1,7 +1,7 @@
 package src.main.java.org.example;
 
 public class Alimento {
- asd
+ 
     private String nome;
     private int geradorCodigo;
     private int nutricao;
