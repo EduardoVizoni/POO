@@ -1,67 +1,56 @@
 package src.main.java.org.example;
 
 public class Pessoa {
-
+    
+    private long cpf;
+    private String nome;
     private String senha;
     private Pet pet;
-    private String nome;
-    private long cpf;
 
-    public Pessoa(String senha, Pet pet, String nome, long cpf) {
-        this.senha = senha;
-        this.pet = pet;
-        this.nome = nome;
+    public Pessoa(long cpf, String nome, String senha) {
         this.cpf = cpf;
-    }
-
-    public void add(Pessoa pessoa) {
-        pessoa.add(pessoa);
-        System.out.println("Pessoa adicionada com sucesso!");
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
+        this.nome = nome;
         this.senha = senha;
     }
 
-    public Pet getPet() {
-        return pet;
+    public void adotarPet(Pet pet) {
+        if (this.pet == null) this.pet = pet;
     }
 
-    public void setPet(Pet pet) {
-        this.pet = pet;
+    public void alimentarPet() {
+        if (pet != null && pet.isVivo() && pet.isAcordado()) pet.comer();
     }
 
-    public String getNome() {
-        return nome;
+    public void darAguaParaPet() {
+        if (pet != null && pet.isVivo() && pet.isAcordado()) pet.beberAgua();
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void brincarComPet() {
+        if (pet != null && pet.isVivo() && pet.isAcordado()) pet.brincar();
     }
 
-    public long getCpf() {
-        return cpf;
+    public void botaPetParaDormir() {
+        if (pet != null && pet.isVivo()) pet.dormir();
     }
 
-    public void setCpf(long cpf) {
-        this.cpf = cpf;
+    public void acordarPet() {
+        if (pet != null && pet.isVivo()) pet.acordar();
     }
 
-    public boolean botaPetParaDormir() {
-        if(Pet.getAcordado == true) {
-            return Pet.setAcordado == false;
-        }
-        return false;
+    public void limparPet() {
+        if (pet != null && pet.isVivo()) pet.limpar();
     }
 
-    public boolean acordarPet() {
-        if(Pet.getAcordado == false) {
-            return Pet.setAcordado == true;
-        }
-        return false;
+    public void avaliarPet() {
+        if (pet != null) pet.status();
+    }
+
+    @Override
+    public String toString() {
+        return "Pessoa{" +
+                "CPF=" + cpf +
+                ", Nome='" + nome + '\'' +
+                ", Pet=" + (pet != null ? pet.toString() : "Nenhum") +
+                '}';
     }
 }
