@@ -9,14 +9,12 @@ public abstract class ContaBancaria {
 
     public abstract void calcularRendimento();
 
-    public double depositar(double valor) {
+    public void depositar(double valor) {
         if (valor > 0) {
             saldo += valor;
-        }
-        else {
+        } else {
             System.out.println("Valor insuficiente para depositar.");
         }
-        return valor;
     }
 
     public void sacar(double valor) {
@@ -28,14 +26,13 @@ public abstract class ContaBancaria {
         }
     }
 
-    public double transferir(double valor, ContaBancaria contaDestino) {
+    public void transferir(double valor, ContaBancaria contaDestino) {
         if (contaDestino != null && valor > 0 && this.saldo >= valor) {
+            this.saldo -= valor;
             contaDestino.saldo += valor;
-        }
-        else {
+        } else {
             System.out.println("Valor insuficiente para transferir.");
         }
-        return valor;
     }
 
     public void exibirSaldo() {

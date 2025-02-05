@@ -5,7 +5,6 @@ public class ContaCorrente extends ContaBancaria {
 
     @Override
     public void calcularRendimento() {
-        // Conta corrente não tem rendimento
         System.out.println("Conta corrente não possui rendimento.");
     }
 }
